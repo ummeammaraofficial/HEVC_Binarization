@@ -25,35 +25,35 @@
 module Kth_order_EGK_tb;
     
     // Parameters
-    parameter SYMBOL_BITS = 16;
-    parameter MAX_BITS = 16;
+    parameter N             = 8;     
+    parameter bins_width    = 16;  
     
     // Testbench variables
-    logic                   clk;
-    logic                   rst_n;
-    logic                   start;
-    logic [SYMBOL_BITS-1:0] symbolVal;
-    logic [3:0]             K;
-    logic                   done;
-    logic [MAX_BITS-1:0]    code;
-    logic [7:0]             code_len;
+    logic                       clk;
+    logic                       rst_n;
+    logic                       start;
+    logic [N-1:0]               N_i;
+    logic [3:0]                 K;
+    logic                       done;
+    logic [bins_width-1:0]      bin_string;
+    logic [bins_width-1:0]      bin_len;
     
     // Clock generation
     always #5 clk = ~clk;
     
     // Instantiate DUT
     Kth_order_EGK #(
-        .SYMBOL_BITS(SYMBOL_BITS),
-        .MAX_BITS(MAX_BITS)
+        .N(N),
+        .bins_width(bins_width)
     ) dut (
         .clk(clk),
         .rst_n(rst_n),
         .start(start),
         .K(K),
-        .symbolVal(symbolVal),
+        .N_i(N_i),
         .done(done),
-        .code(code),
-        .code_len(code_len)
+        .bin_string(bin_string),
+        .bin_len(bin_len)
     );
     
     initial begin
@@ -61,7 +61,7 @@ module Kth_order_EGK_tb;
         clk = 0;
         rst_n = 0;
         start = 0;
-        symbolVal = 0;
+        N_i = 0;
         K= 0;
         
         #20;
@@ -70,10 +70,10 @@ module Kth_order_EGK_tb;
         
         
         // Test values from 0 to 4
-        for (int i = -3; i <= 6; i++) begin
+        for (int i = 0; i <= 6; i++) begin
            #10 start = 1;
            K = 1;
-            symbolVal = i;
+           N_i = i;
            #30 start = 0;
             wait(done);
         end
