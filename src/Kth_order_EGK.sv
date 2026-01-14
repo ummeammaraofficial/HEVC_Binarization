@@ -21,17 +21,17 @@
 
 
 module Kth_order_EGK #(
-    parameter SYMBOL_BITS = 8,     
-    parameter MAX_BITS    = 16     
+    parameter N = 8,     
+    parameter bins_width = 16     
 )(
-    input  logic                      clk,
-    input  logic                      rst_n,
-    input  logic                      start,
-    input  logic [3:0]                K,
-    input  logic [SYMBOL_BITS-1:0]    N_i,
-    output logic                      done,
-    output logic [MAX_BITS-1:0]       bin_string,
-    output logic [MAX_BITS - 1:0]     bin_len
+    input  logic                        clk,
+    input  logic                        rst_n,
+    input  logic                        start,
+    input  logic [3:0]                  K,
+    input  logic [N-1:0]                N_i,
+    output logic                        done,
+    output logic [bins_width-1:0]       bin_string,
+    output logic [bins_width - 1:0]     bin_len
 );
 
     localparam K_INT_BITS =  ($clog2(N) > 0) ? $clog2(N) : 1;
@@ -47,8 +47,8 @@ module Kth_order_EGK #(
     logic [N-1:0]                absV;                    
     logic [K_INT_BITS-1:0]       k;                    
     logic [K_INT_BITS-1:0]       bit_cnt;
-    logic [MAX_BITS-1:0]         shift_reg;       
-    logic [MAX_BITS-1:0]         length_reg;
+    logic [bins_width-1:0]       shift_reg;       
+    logic [bins_width-1:0]       length_reg;
     logic                        sign_bit;
 
 
